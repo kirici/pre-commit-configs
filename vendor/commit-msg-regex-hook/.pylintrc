@@ -1,0 +1,5 @@
+[MASTER]
+ignore=test
+
+[FORMAT]
+indent-string='  '
