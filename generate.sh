@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
+set -euxo pipefail
+declare -a PROJECTS=("merged" "java-maven" "kotlin-maven" "java-gradle" "kotlin-gradle")
 
-yq 'explode(.) | select(di == 1)' template.pre-commit-config.yaml | tee java-maven/.pre-commit-config.yaml >/dev/null
-yq 'explode(.) | select(di == 2)' template.pre-commit-config.yaml | tee kotlin-maven/.pre-commit-config.yaml >/dev/null
-yq 'explode(.) | select(di == 3)' template.pre-commit-config.yaml | tee java-gradle/.pre-commit-config.yaml >/dev/null
-yq 'explode(.) | select(di == 4)' template.pre-commit-config.yaml | tee kotlin-gradle/.pre-commit-config.yaml >/dev/null
+for index in "${!PROJECTS[@]}" ; do
+  yq 'explode(.) | select(di == '"${index}"')' template.pre-commit-config.yaml | tee "${PROJECTS[${index}]}"/.pre-commit-config.yaml >/dev/null
+done
