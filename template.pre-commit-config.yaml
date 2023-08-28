@@ -28,6 +28,11 @@
   - id: maven
     args: ["diktat:check@diktat"]
     stages: [pre-commit]
+- &java-gradle
+- repo: https://github.com/jguttman94/pre-commit-gradle
+  rev: v0.2.1 # Use the ref you want to point at
+  hooks:
+  - id: gradle-check
 ---
 !!merge <<: *defaults
 repos:
@@ -38,3 +43,8 @@ repos:
 repos:
 - !!merge <<: *commit-msg
 - !!merge <<: *kotlin-maven
+---
+!!merge <<: *defaults
+repos:
+- !!merge <<: *commit-msg
+- !!merge <<: *java-gradle
