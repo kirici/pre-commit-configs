@@ -11,8 +11,8 @@ repos:
     rev: v0.3.3
     hooks:
       - id: maven
-        args: ["clean --batch-mode package"]
+        args: ["--batch-mode clean package"]
         stages: [post-commit]
       - id: maven
-        args: ["spotbugs:spotbugs"]
+        args: ["--batch-mode spotbugs:spotbugs"]
         stages: [pre-commit]

@@ -11,5 +11,8 @@ repos:
     rev: v0.3.3
     hooks:
       - id: maven
-        args: ["clean --batch-mode package"]
+        args: ["--batch-mode clean package"]
         stages: [post-commit]
+      - id: maven
+        args: ["--batch-mode diktat:check@diktat"]
+        stages: [pre-commit]
