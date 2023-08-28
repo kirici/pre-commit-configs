@@ -18,8 +18,23 @@
   - id: maven
     args: ["spotbugs:spotbugs"]
     stages: [pre-commit]
+- &kotlin-maven
+  repo: https://github.com/ejba/pre-commit-maven
+  rev: v0.3.3
+  hooks:
+  - id: maven
+    args: ["clean --batch-mode package"]
+    stages: [post-commit]
+  - id: maven
+    args: ["diktat:check@diktat"]
+    stages: [pre-commit]
 ---
 !!merge <<: *defaults
 repos:
 - !!merge <<: *commit-msg
 - !!merge <<: *java-maven
+---
+!!merge <<: *defaults
+repos:
+- !!merge <<: *commit-msg
+- !!merge <<: *kotlin-maven
