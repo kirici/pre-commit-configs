@@ -16,3 +16,6 @@ repos:
       - id: maven
         args: ["--batch-mode spotbugs:spotbugs"]
         stages: [pre-commit]
+      - id: maven
+        args: ["--batch-mode spotless:check"]
+        stages: [pre-commit]
