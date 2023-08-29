@@ -17,6 +17,7 @@ steps:
   - id: maven
     args: ["--batch-mode clean package"]
     stages: [post-commit]
+  # Code quality
   - id: maven
     args: ["--batch-mode spotbugs:spotbugs"]
   - id: maven
@@ -25,17 +26,17 @@ steps:
   repo: https://github.com/ejba/pre-commit-maven
   rev: v0.3.3
   hooks:
-  - id: maven
-    args: ["--batch-mode clean package"]
-    stages: [post-commit]
+  # Code style and quality
   - id: maven
     args: ["--batch-mode diktat:check@diktat"]
 - &java-gradle
   repo: https://github.com/jguttman94/pre-commit-gradle
   rev: v0.3.0
   hooks:
+  # Code style: run spotless
   - id: gradle-task
     args: ['spotlessCheck', '-w', '-o']
+  # Code quality, style: build, test, checkstyle, spotbugs
   - id: gradle-build
     args: ['-w', '-o']
     stages: [post-commit]
