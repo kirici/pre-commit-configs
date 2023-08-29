@@ -11,6 +11,9 @@ repos:
   - repo: https://github.com/jguttman94/pre-commit-gradle
     rev: v0.3.0
     hooks:
-      - id: gradle-build
-        args: ['-w', '-o']
-        stages: [post-commit]
+      # Code style
+      - id: gradle-task
+        args: ['diktatCheck', '-w', '-o']
+      # Code quality
+      - id: gradle-task
+        args: ['detekt', '-w', '-o']

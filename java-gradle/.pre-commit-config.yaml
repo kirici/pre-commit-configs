@@ -11,12 +11,11 @@ repos:
   - repo: https://github.com/jguttman94/pre-commit-gradle
     rev: v0.3.0
     hooks:
-      # Code style: run spotless
+      # Code style
+      - id: gradle-task
+        args: ['checkstyleMain', 'checkstyleTest', '-w', '-o']
       - id: gradle-task
         args: ['spotlessCheck', '-w', '-o']
-      # Code quality, style: build, test, checkstyle, spotbugs
-      - id: gradle-build
-        args: ['-w', '-o']
-        stages: [post-commit]
+      # Code quality
       - id: gradle-task
         args: ['spotbugsMain', '-w', '-o']

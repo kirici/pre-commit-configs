@@ -11,11 +11,11 @@ repos:
   - repo: https://github.com/ejba/pre-commit-maven
     rev: v0.3.3
     hooks:
+      # Code style
       - id: maven
-        args: ["--batch-mode clean package"]
-        stages: [post-commit]
+        args: ["-B --no-transfer-progress checkstyle:check -c google_checks.xml"]
       # Code quality
       - id: maven
-        args: ["--batch-mode spotbugs:spotbugs"]
+        args: ["-B --no-transfer-progress spotbugs:spotbugs"]
       - id: maven
-        args: ["--batch-mode spotless:check"]
+        args: ["-B --no-transfer-progress spotless:check"]
