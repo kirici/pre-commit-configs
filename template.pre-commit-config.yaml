@@ -1,6 +1,7 @@
-- &defaults
+.defaults: &defaults
   fail_fast: false
   default_install_hook_types: [pre-commit, commit-msg, post-commit]
+steps:
 - &commit-msg
   repo: https://github.com/dtaivpp/commit-msg-regex-hook
   rev: v0.2.1
@@ -51,24 +52,23 @@
   - id: gradle-build
     args: ['-w', '-o']
     stages: [post-commit]
-
 ---
-!!merge <<: *defaults
+<<: *defaults
 repos:
-- !!merge <<: *commit-msg
-- !!merge <<: *java-maven
+- *commit-msg
+- *java-maven
 ---
-!!merge <<: *defaults
+<<: *defaults
 repos:
-- !!merge <<: *commit-msg
-- !!merge <<: *kotlin-maven
+- *commit-msg
+- *kotlin-maven
 ---
-!!merge <<: *defaults
+<<: *defaults
 repos:
-- !!merge <<: *commit-msg
-- !!merge <<: *java-gradle
+- *commit-msg
+- *java-gradle
 ---
-!!merge <<: *defaults
+<<: *defaults
 repos:
-- !!merge <<: *commit-msg
-- !!merge <<: *kotlin-gradle
+- *commit-msg
+- *kotlin-gradle
