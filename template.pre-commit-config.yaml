@@ -14,41 +14,46 @@ steps:
   repo: https://github.com/ejba/pre-commit-maven
   rev: v0.3.3
   hooks:
+  # Code style
   - id: maven
-    args: ["--batch-mode clean package"]
-    stages: [post-commit]
+    args: ["-B --no-transfer-progress checkstyle:check -c google_checks.xml"]
   # Code quality
   - id: maven
-    args: ["--batch-mode spotbugs:spotbugs"]
+    args: ["-B --no-transfer-progress spotbugs:spotbugs"]
   - id: maven
-    args: ["--batch-mode spotless:check"]
+    args: ["-B --no-transfer-progress spotless:check"]
 - &kotlin-maven
   repo: https://github.com/ejba/pre-commit-maven
   rev: v0.3.3
   hooks:
-  # Code style and quality
+  # Code quality
   - id: maven
-    args: ["--batch-mode diktat:check@diktat"]
+    args: ["-B --no-transfer-progress detekt:check"]
+  # Code style
+  - id: maven
+    args: ["-B --no-transfer-progress diktat:check@diktat"]
 - &java-gradle
   repo: https://github.com/jguttman94/pre-commit-gradle
   rev: v0.3.0
   hooks:
-  # Code style: run spotless
+    # Code style
+  - id: gradle-task
+    args: ['checkstyleMain', 'checkstyleTest', '-w', '-o']
   - id: gradle-task
     args: ['spotlessCheck', '-w', '-o']
-  # Code quality, style: build, test, checkstyle, spotbugs
-  - id: gradle-build
-    args: ['-w', '-o']
-    stages: [post-commit]
+  # Code quality
   - id: gradle-task
     args: ['spotbugsMain', '-w', '-o']
 - &kotlin-gradle
   repo: https://github.com/jguttman94/pre-commit-gradle
   rev: v0.3.0
   hooks:
-  - id: gradle-build
-    args: ['-w', '-o']
-    stages: [post-commit]
+  # Code style
+  - id: gradle-task
+    args: ['diktatCheck', '-w', '-o']
+  # Code quality
+  - id: gradle-task
+    args: ['detekt', '-w', '-o']
 - &javascript
   repo: https://github.com/pre-commit/mirrors-prettier
   rev: v3.0.0 # Replace with the desired version of Prettier
