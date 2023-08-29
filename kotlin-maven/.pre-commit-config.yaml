@@ -11,8 +11,6 @@ repos:
   - repo: https://github.com/ejba/pre-commit-maven
     rev: v0.3.3
     hooks:
-      - id: maven
-        args: ["--batch-mode clean package"]
-        stages: [post-commit]
+      # Code style and quality
       - id: maven
         args: ["--batch-mode diktat:check@diktat"]

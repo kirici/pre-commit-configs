@@ -14,6 +14,7 @@ repos:
       - id: maven
         args: ["--batch-mode clean package"]
         stages: [post-commit]
+      # Code quality
       - id: maven
         args: ["--batch-mode spotbugs:spotbugs"]
       - id: maven
