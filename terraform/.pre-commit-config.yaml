@@ -8,9 +8,10 @@ repos:
       - id: commit-msg-regex-hook
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
-  - repo: https://github.com/liamg/tfsec # Security Checks
+  - repo: https://github.com/liamg/tfsec
     rev: v1.28.1
     hooks:
+      # Security Checks
       - id: tfsec
         description: This hook runs tfsec scan.
         entry: tfsec
@@ -24,9 +25,11 @@ repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.82.0
     hooks:
-      - id: terraform_validate # Code Quality check
+      # Code Quality check
+      - id: terraform_validate
         description: This hook runs "terraform validate" scan.
-      - id: terraform_fmt # Code Styling check
+      # Code Styling check
+      - id: terraform_fmt
         description: This hook runs "terraform fmt -recursive" scan.
         args:
           - --args=-recursive
