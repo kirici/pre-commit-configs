@@ -1,4 +1,5 @@
 fail_fast: false
+default_stages: [pre-commit]
 default_install_hook_types: [pre-commit, commit-msg, post-commit]
 repos:
   - repo: https://github.com/dtaivpp/commit-msg-regex-hook
@@ -23,11 +24,9 @@ repos:
   - repo: https://github.com/antonbabenko/pre-commit-terraform
     rev: v1.82.0
     hooks:
-      # Code Quality check   
-      - id: terraform_validate
+      - id: terraform_validate # Code Quality check
         description: This hook runs "terraform validate" scan.
-      # Code Styling check
-      - id: terraform_fmt
+      - id: terraform_fmt # Code Styling check
         description: This hook runs "terraform fmt -recursive" scan.
         args:
           - --args=-recursive

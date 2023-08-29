@@ -1,4 +1,5 @@
 fail_fast: false
+default_stages: [pre-commit]
 default_install_hook_types: [pre-commit, commit-msg, post-commit]
 repos:
   - repo: https://github.com/dtaivpp/commit-msg-regex-hook
@@ -13,4 +14,3 @@ repos:
       - id: prettier
         entry: prettier --check
         types_or: [javascript, ts]
-        stages: [pre-commit]

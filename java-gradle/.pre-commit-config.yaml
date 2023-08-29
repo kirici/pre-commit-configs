@@ -1,4 +1,5 @@
 fail_fast: false
+default_stages: [pre-commit]
 default_install_hook_types: [pre-commit, commit-msg, post-commit]
 repos:
   - repo: https://github.com/dtaivpp/commit-msg-regex-hook
@@ -12,10 +13,8 @@ repos:
     hooks:
       - id: gradle-task
         args: ['spotlessCheck', '-w', '-o']
-        stages: [pre-commit]
       - id: gradle-build
         args: ['-w', '-o']
         stages: [post-commit]
       - id: gradle-task
         args: ['spotbugsMain', '-w', '-o']
-        stages: [pre-commit]
