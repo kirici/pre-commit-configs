@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 set -euxo pipefail
-declare -a PROJECTS=("merged" "java-maven" "kotlin-maven" "java-gradle" "kotlin-gradle")
+declare -a PROJECTS=("merged" "java-maven" "kotlin-maven" "java-gradle" "kotlin-gradle" "javascript" "terraform")
 
 for index in "${!PROJECTS[@]}" ; do
   mkdir -p "${PROJECTS[${index}]}"

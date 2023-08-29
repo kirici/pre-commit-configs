@@ -52,6 +52,42 @@ steps:
   - id: gradle-build
     args: ['-w', '-o']
     stages: [post-commit]
+- &javascript
+  repo: https://github.com/pre-commit/mirrors-prettier
+  rev: v3.0.0 # Replace with the desired version of Prettier
+  hooks:
+  - id: prettier
+    entry: prettier --check
+    types_or: [javascript, ts]
+    stages: [pre-commit]
+- &tf-tfsec
+  repo: https://github.com/liamg/tfsec # Security Checks
+  rev: v1.28.1
+  hooks:
+  - id: tfsec
+    description: This hook runs tfsec scan.
+    entry: tfsec
+- &tf-checkov
+  repo: https://github.com/bridgecrewio/checkov
+  rev: 2.4.6
+  hooks:
+  - id: checkov
+    name: Checkov
+    description: This hook runs checkov scan.
+    entry: checkov -d . --quiet
+- &tf-pre-commit-terraform
+  repo: https://github.com/antonbabenko/pre-commit-terraform
+  rev: v1.82.0
+  hooks:
+  - id: terraform_validate # Code Quality check
+    description: This hook runs "terraform validate" scan.
+  - id: terraform_fmt # Code Styling check
+    description: This hook runs "terraform fmt -recursive" scan.
+    args:
+    - --args=-recursive
+    - --args=-write=false
+  - id: terraform_tflint
+    description: This hook runs tflint scan.
 ---
 <<: *defaults
 repos:
@@ -72,3 +108,15 @@ repos:
 repos:
 - *commit-msg
 - *kotlin-gradle
+---
+<<: *defaults
+repos:
+- *commit-msg
+- *javascript
+---
+<<: *defaults
+repos:
+- *commit-msg
+- *tf-tfsec
+- *tf-checkov
+- *tf-pre-commit-terraform
