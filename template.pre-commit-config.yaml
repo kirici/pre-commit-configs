@@ -36,7 +36,7 @@ steps:
   repo: https://github.com/jguttman94/pre-commit-gradle
   rev: v0.3.0
   hooks:
-    # Code style
+  # Code style
   - id: gradle-task
     args: ['checkstyleMain', 'checkstyleTest', '-w', '-o']
   - id: gradle-task
@@ -62,9 +62,10 @@ steps:
     entry: prettier --check
     types_or: [javascript, ts]
 - &tf-tfsec
-  repo: https://github.com/liamg/tfsec # Security Checks
+  repo: https://github.com/liamg/tfsec
   rev: v1.28.1
   hooks:
+  # Security Checks
   - id: tfsec
     description: This hook runs tfsec scan.
     entry: tfsec
@@ -80,9 +81,11 @@ steps:
   repo: https://github.com/antonbabenko/pre-commit-terraform
   rev: v1.82.0
   hooks:
-  - id: terraform_validate # Code Quality check
+  # Code Quality check
+  - id: terraform_validate
     description: This hook runs "terraform validate" scan.
-  - id: terraform_fmt # Code Styling check
+  # Code Styling check
+  - id: terraform_fmt
     description: This hook runs "terraform fmt -recursive" scan.
     args:
     - --args=-recursive
