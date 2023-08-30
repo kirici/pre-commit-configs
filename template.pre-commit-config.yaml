@@ -7,6 +7,7 @@ steps:
   rev: v0.2.1
   hooks:
   - id: commit-msg-regex-hook
+    name: Validate commit message format
     args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
     stages: [commit-msg]
 - &gitleaks
@@ -15,17 +16,21 @@ steps:
   hooks:
   # Detect secrets
   - id: gitleaks
+    name: Check for secrets being committed
 - &java-maven
   repo: https://github.com/ejba/pre-commit-maven
   rev: v0.3.3
   hooks:
   # Code style
   - id: maven
+    name: Checkstyle
     args: ["-B --no-transfer-progress checkstyle:check -c google_checks.xml"]
   # Code quality
   - id: maven
+    name: Spotbugs
     args: ["-B --no-transfer-progress spotbugs:spotbugs"]
   - id: maven
+    name: Spotless
     args: ["-B --no-transfer-progress spotless:check"]
 - &kotlin-maven
   repo: https://github.com/ejba/pre-commit-maven
@@ -33,9 +38,11 @@ steps:
   hooks:
   # Code quality
   - id: maven
+    name: Detekt
     args: ["-B --no-transfer-progress detekt:check"]
   # Code style
   - id: maven
+    name: Diktat
     args: ["-B --no-transfer-progress diktat:check@diktat"]
 - &java-gradle
   repo: https://github.com/jguttman94/pre-commit-gradle
@@ -43,11 +50,14 @@ steps:
   hooks:
   # Code style
   - id: gradle-task
+    name: Checkstyle
     args: ['checkstyleMain', 'checkstyleTest', '-w', '-o']
   - id: gradle-task
+    name: Spotless
     args: ['spotlessCheck', '-w', '-o']
   # Code quality
   - id: gradle-task
+    name: Spotbugs
     args: ['spotbugsMain', '-w', '-o']
 - &kotlin-gradle
   repo: https://github.com/jguttman94/pre-commit-gradle
@@ -55,25 +65,29 @@ steps:
   hooks:
   # Code style
   - id: gradle-task
+    name: Diktat
     args: ['diktatCheck', '-w', '-o']
   # Code quality
   - id: gradle-task
+    name: Detekt
     args: ['detekt', '-w', '-o']
 - &jsts-prettier
   repo: https://github.com/pre-commit/mirrors-prettier
-  rev: v3.0.0  # Replace with the desired version of Prettier
+  rev: v3.0.0 # Replace with the desired version of Prettier
   hooks:
   # Code styling check
   - id: prettier
+    name: Check using Prettier
     entry: prettier --check
 - &jsts-eslint
   repo: https://github.com/pre-commit/mirrors-eslint
-  rev: 'v8.48.0'  # Replace with the desired version of ESlint
+  rev: 'v8.48.0' # Replace with the desired version of ESlint
   hooks:
   # Code Quality check
   - id: eslint
-    files: \.[jt]sx?$  # For *.js, *.jsx, *.ts and *.tsx
-    additional_dependencies:  # Add the required additional dependencies.
+    name: Check using ESLint
+    files: \.[jt]sx?$ # For *.js, *.jsx, *.ts and *.tsx
+    additional_dependencies: # Add the required additional dependencies.
     - eslint@latest
     - eslint-plugin-react@latest
     - '@typescript-eslint/parser@latest'
@@ -84,6 +98,7 @@ steps:
   hooks:
   # Security Checks
   - id: tfsec
+    name: Scan using tfsec
     description: This hook runs tfsec scan.
     entry: tfsec
 - &tf-checkov
@@ -100,9 +115,11 @@ steps:
   hooks:
   # Code Quality check
   - id: terraform_validate
+    name: terraform validate
     description: This hook runs "terraform validate" scan.
   # Code Styling check
   - id: terraform_fmt
+    name: terraform format
     description: This hook runs "terraform fmt -recursive" scan.
     args:
     - --args=-recursive
@@ -114,53 +131,47 @@ steps:
   hooks:
   # Use the locally installed dotnet version to format - repo hook uses preview SDK
   - id: dotnet-format
-    name: dotnet-format
+    name: dotnet format
     language: system
     entry: dotnet format --verify-no-changes **/*.sln
-...
-# 1. java-maven
 ---
+# 1. java-maven
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *java-maven
-...
-# 2. kotlin-maven
 ---
+# 2. kotlin-maven
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *kotlin-maven
-...
-# 3. java-gradle
 ---
+# 3. java-gradle
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *java-gradle
-...
-# 4. kotlin-gradle
 ---
+# 4. kotlin-gradle
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *kotlin-gradle
-...
-# 5. javascript/typescript
 ---
+# 5. javascript/typescript
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *jsts-prettier
 - *jsts-eslint
-...
-# 6. terraform
 ---
+# 6. terraform
 <<: *defaults
 repos:
 - *commit-msg
@@ -168,12 +179,10 @@ repos:
 - *tf-tfsec
 - *tf-checkov
 - *tf-pre-commit-terraform
-...
-# 7. dotnet
 ---
+# 7. dotnet
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *dotnet-format
-...
