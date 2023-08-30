@@ -5,6 +5,7 @@ repos:
     rev: v0.2.1
     hooks:
       - id: commit-msg-regex-hook
+        name: Validate commit message format
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
   - repo: https://github.com/gitleaks/gitleaks
@@ -12,11 +13,13 @@ repos:
     hooks:
       # Detect secrets
       - id: gitleaks
+        name: Check for secrets being committed
   - repo: https://github.com/liamg/tfsec
     rev: v1.28.1
     hooks:
       # Security Checks
       - id: tfsec
+        name: Scan using tfsec
         description: This hook runs tfsec scan.
         entry: tfsec
   - repo: https://github.com/bridgecrewio/checkov
@@ -31,9 +34,11 @@ repos:
     hooks:
       # Code Quality check
       - id: terraform_validate
+        name: terraform validate
         description: This hook runs "terraform validate" scan.
       # Code Styling check
       - id: terraform_fmt
+        name: terraform format
         description: This hook runs "terraform fmt -recursive" scan.
         args:
           - --args=-recursive

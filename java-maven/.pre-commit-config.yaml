@@ -5,6 +5,7 @@ repos:
     rev: v0.2.1
     hooks:
       - id: commit-msg-regex-hook
+        name: Validate commit message format
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
   - repo: https://github.com/gitleaks/gitleaks
@@ -12,14 +13,18 @@ repos:
     hooks:
       # Detect secrets
       - id: gitleaks
+        name: Check for secrets being committed
   - repo: https://github.com/ejba/pre-commit-maven
     rev: v0.3.3
     hooks:
       # Code style
       - id: maven
+        name: Checkstyle
         args: ["-B --no-transfer-progress checkstyle:check -c google_checks.xml"]
       # Code quality
       - id: maven
+        name: Spotbugs
         args: ["-B --no-transfer-progress spotbugs:spotbugs"]
       - id: maven
+        name: Spotless
         args: ["-B --no-transfer-progress spotless:check"]

@@ -5,6 +5,7 @@ repos:
     rev: v0.2.1
     hooks:
       - id: commit-msg-regex-hook
+        name: Validate commit message format
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
   - repo: https://github.com/gitleaks/gitleaks
@@ -12,10 +13,11 @@ repos:
     hooks:
       # Detect secrets
       - id: gitleaks
+        name: Check for secrets being committed
   - repo: local
     hooks:
       # Use the locally installed dotnet version to format - repo hook uses preview SDK
       - id: dotnet-format
-        name: dotnet-format
+        name: dotnet format
         language: system
         entry: dotnet format --verify-no-changes **/*.sln
