@@ -7,6 +7,11 @@ repos:
       - id: commit-msg-regex-hook
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.1
+    hooks:
+      # Detect secrets
+      - id: gitleaks
   - repo: https://github.com/ejba/pre-commit-maven
     rev: v0.3.3
     hooks:

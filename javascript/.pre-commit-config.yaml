@@ -7,9 +7,25 @@ repos:
       - id: commit-msg-regex-hook
         args: ["--pattern='\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'", "--failure_message=\tCommits need to mention a JIRA ticket, version impact and \n\ta description, e.g.: '[ABC-123][minor]: message' \n\tRegex:'\\[[A-Z]{2,4}-\\d+\\]\\[(major|minor|patch)\\]\\:\\s\\w+'"]
         stages: [commit-msg]
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.16.1
+    hooks:
+      # Detect secrets
+      - id: gitleaks
   - repo: https://github.com/pre-commit/mirrors-prettier
     rev: v3.0.0 # Replace with the desired version of Prettier
     hooks:
+      # Code styling check
       - id: prettier
         entry: prettier --check
-        types_or: [javascript, ts]
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: 'v8.48.0' # Replace with the desired version of ESlint
+    hooks:
+      # Code Quality check
+      - id: eslint
+        files: \.[jt]sx?$ # For *.js, *.jsx, *.ts and *.tsx
+        additional_dependencies: # Add the required additional dependencies.
+          - eslint@latest
+          - eslint-plugin-react@latest
+          - '@typescript-eslint/parser@latest'
+          - '@typescript-eslint/eslint-plugin@latest'
