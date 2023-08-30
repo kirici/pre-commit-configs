@@ -117,30 +117,40 @@ steps:
     name: dotnet-format
     language: system
     entry: dotnet format --verify-no-changes **/*.sln
+...
+# 1. java-maven
 ---
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *java-maven
+...
+# 2. kotlin-maven
 ---
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *kotlin-maven
+...
+# 3. java-gradle
 ---
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *java-gradle
+...
+# 4. kotlin-gradle
 ---
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *kotlin-gradle
+...
+# 5. javascript/typescript
 ---
 <<: *defaults
 repos:
@@ -148,6 +158,8 @@ repos:
 - *gitleaks
 - *jsts-prettier
 - *jsts-eslint
+...
+# 6. terraform
 ---
 <<: *defaults
 repos:
@@ -156,9 +168,12 @@ repos:
 - *tf-tfsec
 - *tf-checkov
 - *tf-pre-commit-terraform
+...
+# 7. dotnet
 ---
 <<: *defaults
 repos:
 - *commit-msg
 - *gitleaks
 - *dotnet-format
+...
