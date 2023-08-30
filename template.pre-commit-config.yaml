@@ -1,5 +1,4 @@
 .defaults: &defaults
-  fail_fast: false
   default_stages: [pre-commit]
   default_install_hook_types: [pre-commit, commit-msg, post-commit]
 steps:
