@@ -109,6 +109,14 @@ steps:
     - --args=-write=false
   - id: terraform_tflint
     description: This hook runs tflint scan.
+- &dotnet-format
+  repo: local
+  hooks:
+  # Use the locally installed dotnet version to format - repo hook uses preview SDK
+  - id: dotnet-format
+    name: dotnet-format
+    language: system
+    entry: dotnet format --verify-no-changes **/*.sln
 ---
 <<: *defaults
 repos:
@@ -148,3 +156,9 @@ repos:
 - *tf-tfsec
 - *tf-checkov
 - *tf-pre-commit-terraform
+---
+<<: *defaults
+repos:
+- *commit-msg
+- *gitleaks
+- *dotnet-format
