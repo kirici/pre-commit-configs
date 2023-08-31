@@ -134,6 +134,15 @@ steps:
     name: dotnet format
     language: system
     entry: dotnet format --verify-no-changes **/*.sln
+- &dotnet-scs
+  repo: local
+  hooks:
+  # Security checks
+  - id: security-code-scan
+    name: SCS scan for potential vuln.
+    language: system
+    entry: sh -c "dotnet tool install security-scan --tool-path ./.git/hooks/ &>/dev/null ; ./.git/hooks/security-scan -n **/*.sln"
+
 ---
 # 1. java-maven
 <<: *defaults
