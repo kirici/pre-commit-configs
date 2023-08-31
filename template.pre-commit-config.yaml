@@ -133,7 +133,7 @@ steps:
   - id: dotnet-format
     name: dotnet format
     language: system
-    entry: dotnet format --verify-no-changes **/*.sln
+    entry: sh -c "dotnet format --verify-no-changes **/*.sln"
 - &dotnet-scs
   repo: local
   hooks:
