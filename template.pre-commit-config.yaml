@@ -195,3 +195,4 @@ repos:
 - *commit-msg
 - *gitleaks
 - *dotnet-format
+- *dotnet-scs
