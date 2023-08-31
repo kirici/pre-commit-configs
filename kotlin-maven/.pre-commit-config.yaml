@@ -17,11 +17,11 @@ repos:
   - repo: https://github.com/ejba/pre-commit-maven
     rev: v0.3.3
     hooks:
-      # Code quality
-      - id: maven
-        name: Detekt
-        args: ["-B --no-transfer-progress detekt:check"]
       # Code style
       - id: maven
         name: Diktat
         args: ["-B --no-transfer-progress diktat:check@diktat"]
+      # Code quality
+      - id: maven
+        name: Detekt
+        args: ["-B --no-transfer-progress detekt:check"]
