@@ -28,7 +28,7 @@ steps:
   # Code style
   - id: maven
     name: Checkstyle
-    args: ["-B --no-transfer-progress checkstyle:check -c google_checks.xml"]
+    args: ["-B --no-transfer-progress checkstyle:check"]
   - id: maven
     name: Spotless
     args: ["-B --no-transfer-progress spotless:check"]
